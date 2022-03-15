@@ -46,9 +46,10 @@ Start
 	ORRS R2, R6, #2_00110111
 	
 	LDR R7, =0xABCDABCD
-	MOV R8, #0x0000FFFF
+	MOV R8, #0x0000FFFF ; MOV não funciona com mais q 16 bits, tem que 
+						; fazer MOV e MOVT
 	
-	BIC R3, R7, R8
+	BIC R3, R7, R8 
 	AND R3, R7, R8
 
 	NOP

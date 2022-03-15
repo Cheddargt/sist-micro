@@ -36,20 +36,32 @@
 Start  
 ; Comece o código aqui <======================================================
 
-	MOV R4, #0xF0
-	ANDS R0, R4, #2_01010101
+	MOV R0, #701
+	LSRS R1, R0, #5
 	
-	MOV R5, #2_11001100
-	ANDS R1, R5, #2_00110011
+	MOV R2, #32067
+	LSRS R3, R2, #4
+	NEG R3, R3
 	
-	MOV R6, #2_10000000
-	ORRS R2, R6, #2_00110111
+	ASRS R4, R0, #3
 	
-	LDR R7, =0xABCDABCD
-	MOV R8, #0x0000FFFF
+	MOV R5, #-32067
+	; ou NEG R5, R5
+	ASRS R6, R5, #5
 	
-	BIC R3, R7, R8
-	AND R3, R7, R8
+	MOV R7, #255
+	LSLS R8, R7, #8
+	
+	MOV R9, #58982
+	NEG R9, R9
+	LSLS R10, R10, #18
+	
+	MOV R11, #0xFABC1234
+	
+	
+	
+	
+	
 
 	NOP
 
