@@ -38,6 +38,36 @@ Start
 
 	MOV R0, #65
 	MOV R1, #0x1B001B00
+	LDR R2,=0x12345678
+	LDR R3,=0x20000040 ; seta ponteiro em R3
+	STR R0, [R3] ; seta o valor que está no R0 em R3 usando ponteiro [ ] 
+	
+	LDR R4,=0x20000044 ; seta ponteiro em R4
+	STR R1, [R4] ; seta o valor que está no R1 em R4 usando ponteiro [ ] 
+	
+	LDR R5,=0x20000048 ; seta ponteiro em R5
+	STR R2, [R5] ; seta o valor que está no R2 em R5 usando ponteiro [ ] 
+	
+	LDR R6,=0x2000004C ; seta ponteiro em R6
+	; exemplo.s(52): error: A1517E: Unexpected operator equal to or equivalent to =
+	LDR R7,=0xF0001 ; seta o número em R7
+	STR R7, [R6] ; seta o valor que está no R7 em R6 usando ponteiro [ ] 
+	
+	LDR R8,=0x20000046 ; seta ponteiro em R3
+	MOV R9, #0xCD
+	STRB R9, [R8] ; seta o valor que está no R2 em R5 usando ponteiro [ ] 
+	
+	LDR R10, [R3] ; lê o conteúdo de R3, a memória 0x..040 e salva em R10
+	
+	LDR R11, [R5] ; lê o conteúdo de R5, a memória 0x..048 e salva em R11
+	
+	MOV R12, R10 ; Copia o conteúdo de R10 para R12
+	
+	NOP
+	
+	
+	
+	
 
     ALIGN                           ; garante que o fim da seção está alinhada 
     END                             ; fim do arquivo

@@ -59,17 +59,82 @@ ARM Macro Assembler    Page 1
    38 00000000         
    39 00000000 F04F 0041       MOV              R0, #65
    40 00000004 F04F 211B       MOV              R1, #0x1B001B00
-   41 00000008         
-   42 00000008                 ALIGN                        ; garante que o fim
-                                                             da seção está alin
-                                                            hada 
+   41 00000008 4A0A            LDR              R2,=0x12345678
+   42 0000000A 4B0B            LDR              R3,=0x20000040 ; seta ponteiro 
+                                                            em R3
+   43 0000000C 6018            STR              R0, [R3]    ; seta o valor que 
 
 
 
 ARM Macro Assembler    Page 2 
 
 
-   43 00000008                 END                          ; fim do arquivo
+                                                            está no R0 em R3 us
+                                                            ando ponteiro [ ] 
+   44 0000000E         
+   45 0000000E 4C0B            LDR              R4,=0x20000044 ; seta ponteiro 
+                                                            em R4
+   46 00000010 6021            STR              R1, [R4]    ; seta o valor que 
+                                                            está no R1 em R4 us
+                                                            ando ponteiro [ ] 
+   47 00000012         
+   48 00000012 4D0B            LDR              R5,=0x20000048 ; seta ponteiro 
+                                                            em R5
+   49 00000014 602A            STR              R2, [R5]    ; seta o valor que 
+                                                            está no R2 em R5 us
+                                                            ando ponteiro [ ] 
+   50 00000016         
+   51 00000016 4E0B            LDR              R6,=0x2000004C ; seta ponteiro 
+                                                            em R6
+   52 00000018         ; exemplo.s(52): error: A1517E: Unexpected operator equa
+                       l to or equivalent to =
+   53 00000018 4F0B            LDR              R7,=0xF0001 ; seta o número em 
+                                                            R7
+   54 0000001A 6037            STR              R7, [R6]    ; seta o valor que 
+                                                            está no R7 em R6 us
+                                                            ando ponteiro [ ] 
+   55 0000001C         
+   56 0000001C F8DF 802C       LDR              R8,=0x20000046 ; seta ponteiro 
+                                                            em R3
+   57 00000020 F04F 09CD       MOV              R9, #0xCD
+   58 00000024 F888 9000       STRB             R9, [R8]    ; seta o valor que 
+                                                            está no R2 em R5 us
+                                                            ando ponteiro [ ] 
+   59 00000028         
+   60 00000028 F8D3 A000       LDR              R10, [R3]   ; lê o conteúdo de 
+                                                            R3, a memória 0x..0
+                                                            40 e salva em R10
+   61 0000002C         
+   62 0000002C F8D5 B000       LDR              R11, [R5]   ; lê o conteúdo de 
+                                                            R5, a memória 0x..0
+                                                            48 e salva em R11
+   63 00000030         
+   64 00000030 46D4            MOV              R12, R10    ; Copia o conteúdo 
+                                                            de R10 para R12
+   65 00000032         
+   66 00000032 BF00            NOP
+   67 00000034         
+   68 00000034         
+   69 00000034         
+   70 00000034         
+   71 00000034         
+   72 00000034                 ALIGN                        ; garante que o fim
+                                                             da seção está alin
+                                                            hada 
+   73 00000034                 END                          ; fim do arquivo
+              12345678 
+              20000040 
+              20000044 
+              20000048 
+              2000004C 
+              000F0001 
+
+
+
+ARM Macro Assembler    Page 3 
+
+
+              20000046 
 Command Line: --debug --xref --diag_suppress=9931 --cpu=Cortex-M4.fp --apcs=int
 erwork --depend=.\exemplo.d -o.\exemplo.o -IC:\Users\a1985370\source\sist-micro
 \aula2\RTE -IC:\Keil_v5\ARM\PACK\Keil\TM4C_DFP\1.1.0\Device\Include\TM4C129 -IC
@@ -114,4 +179,4 @@ Symbol: Start
       At line 27 in file exemplo.s
 Comment: Start used once
 2 symbols
-337 symbols in table
+339 symbols in table
