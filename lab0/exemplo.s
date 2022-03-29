@@ -1,7 +1,7 @@
 ; Exemplo.s
 ; Desenvolvido para a placa EK-TM4C1294XL
-; Prof. Guilherme Peron
-; 12/03/2018
+; Ianca Polizelo e Gustavo Zeni
+; 29/03/2022
 
 ; -------------------------------------------------------------------------------
         THUMB                        ; Instruções do tipo Thumb-2
@@ -44,72 +44,72 @@ Start
 ; Comece o código aqui <======================================================
 
 	;tamanho do vetor aleatório
-	MOV R12, #4 
+	MOV R12, #20 
 
 	;salva no R0 o começo do vetor aleatório
 	LDR R0, =ALEATORIO
 	
 	;adicionando números na memória
-	MOV R1, #3
+	MOV R1, #193
 	STRB R1, [R0], #8 	;grava R1 no [R0] e soma +8 pra ir pro
 						;próximo endereço
 
-	MOV R1, #4
+	MOV R1, #63
+	STRB R1, [R0], #8
+	
+	MOV R1, #176
+	STRB R1, [R0], #8
+	
+	MOV R1, #127
+	STRB R1, [R0], #8
+	
+	MOV R1, #43
+	STRB R1, [R0], #8
+	
+	MOV R1, #13
+	STRB R1, [R0], #8
+	
+	MOV R1, #211
+	STRB R1, [R0], #8
+	
+	MOV R1, #3
+	STRB R1, [R0], #8
+	
+	MOV R1, #203
+	STRB R1, [R0], #8
+	
+	MOV R1, #5
+	STRB R1, [R0], #8
+	
+	MOV R1, #21
 	STRB R1, [R0], #8
 	
 	MOV R1, #7
 	STRB R1, [R0], #8
 	
-	MOV R1, #8
+	MOV R1, #206
 	STRB R1, [R0], #8
 	
-	;MOV R1, #43
-	;STRB R1, [R0], #8
+	MOV R1, #245
+	STRB R1, [R0], #8
 	
-	;MOV R1, #13
-	;STRB R1, [R0], #8
+	MOV R1, #157
+	STRB R1, [R0], #8
 	
-	;MOV R1, #211
-	;STRB R1, [R0], #8
+	MOV R1, #237
+	STRB R1, [R0], #8
 	
-	;MOV R1, #3
-	;STRB R1, [R0], #8
+	MOV R1, #241
+	STRB R1, [R0], #8
 	
-	;MOV R1, #203
-	;STRB R1, [R0], #8
+	MOV R1, #105
+	STRB R1, [R0], #8
 	
-	;MOV R1, #5
-	;STRB R1, [R0], #8
+	MOV R1, #252
+	STRB R1, [R0], #8
 	
-	;MOV R1, #21
-	;STRB R1, [R0], #8
-	
-	;MOV R1, #7
-	;STRB R1, [R0], #8
-	
-	;MOV R1, #206
-	;STRB R1, [R0], #8
-	
-	;MOV R1, #245
-	;STRB R1, [R0], #8
-	
-	;MOV R1, #157
-	;STRB R1, [R0], #8
-	
-	;MOV R1, #237
-	;STRB R1, [R0], #8
-	
-	;MOV R1, #241
-	;STRB R1, [R0], #8
-	
-	;MOV R1, #105
-	;STRB R1, [R0], #8
-	
-	;MOV R1, #252
-	;STRB R1, [R0], #8
-	
-	;MOV R1, #19
-	;STRB R1, [R0], #8
+	MOV R1, #19
+	STRB R1, [R0], #8
 	
 	LDR R0, =ALEATORIO ;Começo do vetor de números aleatórios
 	LDR R1, =ORDENADO ;Começo do vetor de números primos salvos
@@ -164,8 +164,50 @@ cabonaoprimo				;se não for primo
 	BCC loop				;se não acabou, volta pro loop
 	BCS comecaordenacao		;se acabou, vai pro começa a ordenação
 
+
+;A partir daqui vamos ordenar o vetor ORDENADO, que agora contem apenas os número primos.
+;Assim, dessa forma, o vetor ALEATORIO, não importa mais, vamos mexer apenas com o ORDENADO
+;Recaptulando: R1 = posição do vetor ordenado, R2 = tamanho do vetor ordenado
 comecaordenacao
 
+	MOV R0, R2
+	SUB R0, R0, #1
+	
+
+	MOV R3, #1 ;Iterador do for externo
+	
+forexterno
+	LDR R1, =ORDENADO ;Reseta o R1 pra posição inicial do vetor ORDENADO
+	CMP R3, R2
+	BCS acabou
+	
+	MOV R4, #0 ;Iterador do for interno
+	
+forinterno	
+	LDRB R5, [R1], #8
+	LDRB R6, [R1]
+	
+	;Resetar o carry
+	MOV R8, #1
+	CMP R8, #2
+	
+	;Compara
+	CMP R5, R6
+	ITTT CS
+		SUBCS R1, R1, #8
+		STRBCS R6, [R1], #8
+		STRBCS R5, [R1]
+		
+	ADD R4, R4, #1 ;for interno
+	CMP R4, R0
+	BCC forinterno
+	ITT CS
+		ADDCS R3, R3, #1
+		BCS forexterno
+		
+		
+acabou	
+	
 	NOP
 
     ALIGN                           ; garante que o fim da seção está alinhada 
