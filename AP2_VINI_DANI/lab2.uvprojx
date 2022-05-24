@@ -10,20 +10,20 @@
       <TargetName>Target 1</TargetName>
       <ToolsetNumber>0x4</ToolsetNumber>
       <ToolsetName>ARM-ADS</ToolsetName>
-      <pCCUsed>5060061::V5.06 update 1 (build 61)::ARMCC</pCCUsed>
-      <uAC6>0</uAC6>
+      <pCCUsed>6160000::V6.16::ARMCLANG</pCCUsed>
+      <uAC6>1</uAC6>
       <TargetOption>
         <TargetCommonOption>
-          <Device>TM4C1294NCPDT</Device>
+          <Device>TM4C129CNCPDT</Device>
           <Vendor>Texas Instruments</Vendor>
           <PackID>Keil.TM4C_DFP.1.1.0</PackID>
           <PackURL>http://www.keil.com/pack/</PackURL>
           <Cpu>IRAM(0x20000000,0x040000) IROM(0x00000000,0x100000) CPUTYPE("Cortex-M4") FPU2 CLOCK(12000000) ELITTLE</Cpu>
           <FlashUtilSpec></FlashUtilSpec>
           <StartupFile></StartupFile>
-          <FlashDriverDll>UL2CM3(-S0 -C0 -P0 -FD20000000 -FC1000 -FN1 -FF0TM4C129_1024 -FS00 -FL0100000 -FP0($$Device:TM4C1294NCPDT$Flash\TM4C129_1024.FLM))</FlashDriverDll>
+          <FlashDriverDll>UL2CM3(-S0 -C0 -P0 -FD20000000 -FC1000 -FN1 -FF0TM4C129_1024 -FS00 -FL0100000 -FP0($$Device:TM4C129CNCPDT$Flash\TM4C129_1024.FLM))</FlashDriverDll>
           <DeviceId>0</DeviceId>
-          <RegisterFile>$$Device:TM4C1294NCPDT$Device\Include\TM4C129\TM4C129.h</RegisterFile>
+          <RegisterFile>$$Device:TM4C129CNCPDT$Device\Include\TM4C129\TM4C129.h</RegisterFile>
           <MemoryEnv></MemoryEnv>
           <Cmp></Cmp>
           <Asm></Asm>
@@ -33,7 +33,7 @@
           <SLE66CMisc></SLE66CMisc>
           <SLE66AMisc></SLE66AMisc>
           <SLE66LinkerMisc></SLE66LinkerMisc>
-          <SFDFile>$$Device:TM4C1294NCPDT$SVD\TM4C129\TM4C1294NCPDT.svd</SFDFile>
+          <SFDFile>$$Device:TM4C129CNCPDT$SVD\TM4C129\TM4C129CNCPDT.svd</SFDFile>
           <bCustSvd>0</bCustSvd>
           <UseEnv>0</UseEnv>
           <BinPath></BinPath>
@@ -48,14 +48,14 @@
             <NotGenerated>0</NotGenerated>
             <InvalidFlash>1</InvalidFlash>
           </TargetStatus>
-          <OutputDirectory>.\</OutputDirectory>
-          <OutputName>Exemplo</OutputName>
+          <OutputDirectory>.\Objects\</OutputDirectory>
+          <OutputName>lab2</OutputName>
           <CreateExecutable>1</CreateExecutable>
           <CreateLib>0</CreateLib>
           <CreateHexFile>0</CreateHexFile>
           <DebugInformation>1</DebugInformation>
           <BrowseInformation>1</BrowseInformation>
-          <ListingPath>.\</ListingPath>
+          <ListingPath>.\Listings\</ListingPath>
           <HexFormatSelection>1</HexFormatSelection>
           <Merge32K>0</Merge32K>
           <CreateBatchFile>0</CreateBatchFile>
@@ -384,14 +384,34 @@
           <GroupName>Source Group 1</GroupName>
           <Files>
             <File>
-              <FileName>exemplo.s</FileName>
+              <FileName>gpio.s</FileName>
               <FileType>2</FileType>
-              <FilePath>.\exemplo.s</FilePath>
+              <FilePath>.\gpio.s</FilePath>
+            </File>
+            <File>
+              <FileName>leds.s</FileName>
+              <FileType>2</FileType>
+              <FilePath>.\leds.s</FilePath>
+            </File>
+            <File>
+              <FileName>main.s</FileName>
+              <FileType>2</FileType>
+              <FilePath>.\main.s</FilePath>
             </File>
             <File>
               <FileName>startup.s</FileName>
               <FileType>2</FileType>
               <FilePath>.\startup.s</FilePath>
+            </File>
+            <File>
+              <FileName>utils.s</FileName>
+              <FileType>2</FileType>
+              <FilePath>.\utils.s</FilePath>
+            </File>
+            <File>
+              <FileName>teclado.s</FileName>
+              <FileType>2</FileType>
+              <FilePath>.\teclado.s</FilePath>
             </File>
           </Files>
         </Group>
