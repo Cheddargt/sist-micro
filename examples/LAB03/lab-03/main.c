@@ -25,7 +25,7 @@ void SysTick_Wait1ms(uint32_t delay);
 void SysTick_Wait1us(uint32_t delay);
 void GPIO_Init(void);
 
-void Ledzinhos (void);
+//void PiscarLeds (void);
 void DisplayEscreve (char *mensagem);
 void DisplayLimpa(void);
 void PassoCompletoDir (void);
@@ -54,13 +54,16 @@ void PortQ_Output(uint32_t leds);
 int main(void)
 {
 	int32_t numeroDeVoltas;
+	//int32_t btn_interr;
 	PLL_Init();
 	SysTick_Init();
 	GPIO_Init();
 	DisplayInit();
 	PortP_Output(0x20);
+	
 	while (1)
-	{
+	{	
+			//btn_interr = PortJ_Input();
 		  DisplayLimpa();
 			DisplayEscreve("Digite o numero de voltas: ");
 			int32_t numDigitado = 20;
@@ -214,62 +217,133 @@ int main(void)
 			else
 				DisplayEscreve(&a);
 			
+			// if sentido
 			int x = 0,z=1;
-			float graus = 0;
 			
-			for(int i=1;i<=numeroDeVoltas*525;i++)
-			{
-				graus += (360.0/525.0);
-				if(graus >= 20.0)
-				{
-					if(x == 8)
-					{
-						PortA_Output(0);		//zera as portas A
-						z=1;
-						x = 0;
-					}
-					if(x == 4)
-						PortQ_Output(0);		//zera as portas Q
-					if(x < 4)
-					{
-						PortQ_Output(z);
-						z = z << 1;
-						x++;
-					}
-					
-					else if(x >= 4 && x<8)
-					{
-						PortA_Output(z);
-						z = z << 1;
-						x++;
-					}
-					
-					graus -= 20.0;
-				}
-				if(i%270 == 0)
-				{
-					a = numeroDeVoltas-(i/525)+'0'; 
-					VaiDirecao();
-					DisplayEscreve(&a);
-					DisplayEscreve(" ");
-				}
-				if(passo == 1)
-				{
-					if(sentido == 1)
-					{	
-							PassoCompletoDir();
-					}
-					else
-						PassoCompletoEsq();
-				}
-				if(passo == 2)
-				{
-					if(sentido == 1)
-						MeioPassoDir();
-					else
-						MeioPassoEsq();
-				}
+			if (sentido == 1) {
+				z = 128;
+				x = 7;
 			}
+			float graus = 0;	
+			if (sentido == 1) {
+				for(int i=1;i<=numeroDeVoltas*525;i++)
+				{
+					graus += (360.0/525.0);
+					if(graus >= 20.0)
+					{
+						if(x == -1)
+						{
+							PortQ_Output(0);		//zera as portas A
+							z=128;
+							x = 7;
+						}
+						if(x == 3)
+							PortA_Output(0);		//zera as portas Q
+						if(x < 4)
+						{
+							PortQ_Output(z);
+							z = z >> 1;
+							x--;
+						}
+						
+						else if(x >= 4 && x<8)
+						{
+							PortA_Output(z);
+							z = z >> 1;
+							x--;
+						}
+						
+						graus -= 20.0;
+					}
+					if(i%270 == 0)
+					{
+						a = numeroDeVoltas-(i/525)+'0'; 
+						VaiDirecao();
+						DisplayEscreve(&a);
+						DisplayEscreve(" ");
+					}
+					if(passo == 1)
+					{
+						if(sentido == 1)
+						{	
+								PassoCompletoDir();
+						}
+						else
+							PassoCompletoEsq();
+					}
+					if(passo == 2)
+					{
+						if(sentido == 1)
+							MeioPassoDir();
+						else
+							MeioPassoEsq();
+					}
+				}
+				//if (btn_interr != 0) {
+				//	break;
+				//}
+			}
+			
+			if (sentido == 2) {
+				for(int i=1;i<=numeroDeVoltas*525;i++)
+				{
+					graus += (360.0/525.0);
+					if(graus >= 20.0)
+					{
+						if(x == 8)
+						{
+							PortA_Output(0);		//zera as portas A
+							z=1;
+							x = 0;
+						}
+						if(x == 4)
+							PortQ_Output(0);		//zera as portas Q
+						if(x < 4)
+						{
+							PortQ_Output(z);
+							z = z << 1;
+							x++;
+						}
+						
+						else if(x >= 4 && x<8)
+						{
+							PortA_Output(z);
+							z = z << 1;
+							x++;
+						}
+						
+						graus -= 20.0;
+					}
+					if(i%270 == 0)
+					{
+						a = numeroDeVoltas-(i/525)+'0'; 
+						VaiDirecao();
+						DisplayEscreve(&a);
+						DisplayEscreve(" ");
+					}
+					if(passo == 1)
+					{
+						if(sentido == 1)
+						{	
+								PassoCompletoDir();
+						}
+						else
+							PassoCompletoEsq();
+					}
+					if(passo == 2)
+					{
+						if(sentido == 1)
+							MeioPassoDir();
+						else
+							MeioPassoEsq();
+					}
+				}
+				//if (btn_interr != 0) {
+				//	break;
+				//}
+			}
+			
+			
 			DisplayLimpa();
 			DisplayEscreve("FIM");
 			int32_t aux = ESTRELA;
@@ -421,7 +495,7 @@ void DisplayInit (void)
 		SysTick_Wait1us(10);
 		PortM_Output(0);			//ATIVA A ENTRADA DE INTSTRUCOES
 		SysTick_Wait1us(40);
-													//iniciando o cursor (habilitar o display + cursor + não-pisca)
+													//iniciando o cursor (habilitar o display + cursor + nï¿½o-pisca)
 	  PortM_Output(4);			//ATIVA A ENTRADA DE INTSTRUCOES
 		PortK_Output(0x0E);
 		SysTick_Wait1us(10);
@@ -442,7 +516,7 @@ void DisplayEscreve (char *mensagem)
 			if(i==15)
 			{
 				PortM_Output(4);			//ATIVA A ENTRADA DE INTSTRUCOES
-				PortK_Output(0xC0);		//intrução para limpar
+				PortK_Output(0xC0);		//intruï¿½ï¿½o para limpar
 				SysTick_Wait1us(40);
 				PortM_Output(0);			//ATIVA A ENTRADA DE INTSTRUCOES
 				SysTick_Wait1us(1640);
@@ -453,7 +527,7 @@ void DisplayEscreve (char *mensagem)
 void VaiDirecao (void)
 {
 		PortM_Output(4);			//ATIVA A ENTRADA DE INTSTRUCOES
-		PortK_Output(0xCE);		//intrução para limpar
+		PortK_Output(0xCE);		//intruï¿½ï¿½o para limpar
 		SysTick_Wait1us(40);
 		PortM_Output(0);			//ATIVA A ENTRADA DE INTSTRUCOES
 		SysTick_Wait1us(1640);
@@ -462,7 +536,7 @@ void VaiDirecao (void)
 void DisplayLimpa(void)
 {
 		PortM_Output(4);			//ATIVA A ENTRADA DE INTSTRUCOES
-		PortK_Output(0x1);		//intrução para limpar
+		PortK_Output(0x1);		//intruï¿½ï¿½o para limpar
 		SysTick_Wait1us(40);
 		PortM_Output(0);			//ATIVA A ENTRADA DE INTSTRUCOES
 		SysTick_Wait1us(1640);
@@ -470,20 +544,20 @@ void DisplayLimpa(void)
 
 
 
-void Ledzinhos (void)
-{
-	int i,j=1;
-	for (i=0; i<4 ; i++)
-		{
-			PortQ_Output(j);
-			j = j << 1;
-		}
-		PortQ_Output(0);		//zera as portas Q
-		for (i=4;i<8;i++)
-		{
-			PortA_Output(j);
-			j = j << 1;
-		}
-		PortA_Output(0);		//zera as portas A
-		j=1;
-}
+// void PiscarLeds (void)
+// {
+// 	int i,j=1;
+// 	for (i=0; i<4 ; i++)
+// 		{
+// 			PortQ_Output(i);
+// 			j = j << 1;
+// 		}
+// 		PortQ_Output(0);		//zera as portas Q
+// 		for (i=4;i<8;i++)
+// 		{
+// 			PortA_Output(j);
+// 			j = j << 1;
+// 		}
+// 		PortA_Output(0);		//zera as portas A
+// 		j=1;
+// }
