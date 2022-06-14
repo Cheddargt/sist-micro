@@ -1,0 +1,129 @@
+
+
+
+ARM Macro Assembler    Page 1 
+
+
+    1 00000000         ; Exemplo.s
+    2 00000000         ; Desenvolvido para a placa EK-TM4C1294XL
+    3 00000000         ; Prof. Guilherme Peron
+    4 00000000         ; 12/03/2018
+    5 00000000         
+    6 00000000         ; ------------------------------------------------------
+                       -------------------------
+    7 00000000                 THUMB                        ; Instruções do tip
+                                                            o Thumb-2
+    8 00000000         ; ------------------------------------------------------
+                       -------------------------
+    9 00000000         ; Declarações EQU - Defines
+   10 00000000         ;<NOME>         EQU <VALOR>
+   11 00000000         ; ------------------------------------------------------
+                       -------------------------
+   12 00000000         ; Área de Dados - Declarações de variáveis
+   13 00000000                 AREA             DATA, ALIGN=2
+   14 00000000         ; Se alguma variável for chamada em outro arquivo
+   15 00000000         ;EXPORT  <var> [DATA,SIZE=<tam>]   ; Permite chamar a va
+                       riável <var> a 
+   16 00000000         ; partir de outro arquivo
+   17 00000000         ;<var> SPACE <tam>                        ; Declara uma 
+                       variável de nome <var>
+   18 00000000         ; de <tam> bytes a partir da primeira 
+   19 00000000         ; posição da RAM  
+   20 00000000         
+   21 00000000         ; ------------------------------------------------------
+                       -------------------------
+   22 00000000         ; Área de Código - Tudo abaixo da diretiva a seguir será
+                        armazenado na memória de 
+   23 00000000         ;                  código
+   24 00000000                 AREA             |.text|, CODE, READONLY, ALIGN=
+2
+   25 00000000         
+   26 00000000         ; Se alguma função do arquivo for chamada em outro arqui
+                       vo 
+   27 00000000                 EXPORT           Start       ; Permite chamar a 
+                                                            função Start a part
+                                                            ir de 
+   28 00000000         ; outro arquivo. No caso startup.s
+   29 00000000         
+   30 00000000         ; Se chamar alguma função externa 
+   31 00000000         ;IMPORT <func>              ; Permite chamar dentro dest
+                       e arquivo uma 
+   32 00000000         ; função <func>
+   33 00000000         
+   34 00000000         ; ------------------------------------------------------
+                       -------------------------
+   35 00000000         ; Função main()
+   36 00000000         Start
+   37 00000000         ; Comece o código aqui <================================
+                       ======================
+   38 00000000 F04F 0041       MOV              R0,#65
+   39 00000004 F04F 211B       MOV              R1,#0x1B001B00
+   40 00000008 F245 6278       MOV              R2,#0x5678
+   41 0000000C F2C1 2234       MOVT             R2,#0x1234
+   42 00000010 4B08            LDR              R3,=0x20000040
+   43 00000012 6018            STR              R0,[R3]
+   44 00000014 6059            STR              R1,[R3,#4]
+
+
+
+ARM Macro Assembler    Page 2 
+
+
+   45 00000016 609A            STR              R2,[R3,#8]
+   46 00000018 F04F 0401       MOV              R4,#0x0001
+   47 0000001C F2C0 040F       MOVT             R4,#0xF
+   48 00000020 60DC            STR              R4,[R3,#12]
+   49 00000022 F04F 04CD       MOV              R4,#0xCD
+   50 00000026 F8C3 4006       STR              R4,[R3,#6]
+   51 0000002A 681F            LDR              R7,[R3]
+   52 0000002C F8D3 8008       LDR              R8,[R3,#8]
+   53 00000030 BF00            NOP
+   54 00000032 00 00           ALIGN                        ; garante que o fim
+                                                             da seção está alin
+                                                            hada 
+   55 00000034                 END                          ; fim do arquivo
+              20000040 
+Command Line: --debug --xref --diag_suppress=9931 --cpu=Cortex-M4.fp.sp --apcs=
+interwork --depend=.\exemplo.d -o.\exemplo.o -IC:\Users\Raissa\AppData\Local\Ar
+m\Packs\Keil\TM4C_DFP\1.1.0\Device\Include\TM4C129 --predefine="__EVAL SETA 1" 
+--predefine="__UVISION_VERSION SETA 534" --predefine="TM4C1294NCPDT SETA 1" --l
+ist=.\exemplo.lst exemplo.s
+
+
+
+ARM Macro Assembler    Page 1 Alphabetic symbol ordering
+Relocatable symbols
+
+DATA 00000000
+
+Symbol: DATA
+   Definitions
+      At line 13 in file exemplo.s
+   Uses
+      None
+Comment: DATA unused
+1 symbol
+
+
+
+ARM Macro Assembler    Page 1 Alphabetic symbol ordering
+Relocatable symbols
+
+.text 00000000
+
+Symbol: .text
+   Definitions
+      At line 24 in file exemplo.s
+   Uses
+      None
+Comment: .text unused
+Start 00000000
+
+Symbol: Start
+   Definitions
+      At line 36 in file exemplo.s
+   Uses
+      At line 27 in file exemplo.s
+Comment: Start used once
+2 symbols
+339 symbols in table
